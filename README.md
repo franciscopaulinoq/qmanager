@@ -31,8 +31,8 @@ Este projeto utiliza as seguintes tecnologias:
     ```properties
     # Configuração do Banco de Dados PostgreSQL
     spring.datasource.url=jdbc:postgresql://localhost:5432/qmanager_db
-    spring.datasource.username=seu_usuario_postgres
-    spring.datasource.password=sua_senha_postgres
+    spring.datasource.username=postgres
+    spring.datasource.password=postgres
 
     # Configurações do JPA/Hibernate
     spring.jpa.hibernate.ddl-auto=update
