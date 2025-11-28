@@ -24,7 +24,7 @@ public class CategoryService {
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found: " + id));
     }
 
-    public List<CategoryResponse> findAll() {
+    public List<CategoryResponse> findAllByActiveTrue() {
         return mapper.toResponse(repository.findAllByActiveTrue());
     }
 
