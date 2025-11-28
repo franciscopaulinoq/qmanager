@@ -1,8 +1,8 @@
 package io.github.franciscopaulinoq.qmanager.controller;
 
-import io.github.franciscopaulinoq.qmanager.dto.CategoryRequest;
-import io.github.franciscopaulinoq.qmanager.dto.CategoryResponse;
-import io.github.franciscopaulinoq.qmanager.service.CategoryService;
+import io.github.franciscopaulinoq.qmanager.dto.PriorityRequest;
+import io.github.franciscopaulinoq.qmanager.dto.PriorityResponse;
+import io.github.franciscopaulinoq.qmanager.service.PriorityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,23 +20,23 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/v1/priorities")
 @RequiredArgsConstructor
-public class CategoryController {
-    private final CategoryService service;
+public class PriorityController {
+    private final PriorityService service;
 
     @GetMapping
-    public ResponseEntity<List<CategoryResponse>> listAll() {
+    public ResponseEntity<List<PriorityResponse>> listAll() {
         return ResponseEntity.ok(service.findAllByActiveTrue());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponse> getById(@PathVariable UUID id) {
+    public ResponseEntity<PriorityResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> create(@RequestBody @Valid CategoryRequest request) {
+    public ResponseEntity<PriorityResponse> create(@RequestBody @Valid PriorityRequest request) {
         var response = service.create(request);
 
         var uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -48,9 +48,9 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryResponse> update(
+    public ResponseEntity<PriorityResponse> update(
             @PathVariable UUID id,
-            @RequestBody @Valid CategoryRequest request
+            @RequestBody @Valid PriorityRequest request
     ) {
         return ResponseEntity.ok(service.update(id, request));
     }

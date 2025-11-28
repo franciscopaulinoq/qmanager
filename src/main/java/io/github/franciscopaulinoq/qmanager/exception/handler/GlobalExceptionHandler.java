@@ -2,6 +2,8 @@ package io.github.franciscopaulinoq.qmanager.exception.handler;
 
 import io.github.franciscopaulinoq.qmanager.exception.CategoryAlreadyExistsException;
 import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
+import io.github.franciscopaulinoq.qmanager.exception.PriorityAlreadyExistsException;
+import io.github.franciscopaulinoq.qmanager.exception.PriorityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,6 +27,22 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleCategoryAlreadyExistsException(CategoryAlreadyExistsException e) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
         problem.setTitle("Category already exists");
+        problem.setProperty("timestamp", Instant.now());
+        return problem;
+    }
+
+    @ExceptionHandler(PriorityNotFoundException.class)
+    public ProblemDetail handlePriorityNotFoundException(PriorityNotFoundException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+        problem.setTitle("Priority not found");
+        problem.setProperty("timestamp", Instant.now());
+        return problem;
+    }
+
+    @ExceptionHandler(PriorityAlreadyExistsException.class)
+    public ProblemDetail handlePriorityAlreadyExistsException(PriorityAlreadyExistsException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
+        problem.setTitle("Priority already exists");
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
