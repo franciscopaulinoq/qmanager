@@ -15,19 +15,22 @@ import lombok.experimental.SuperBuilder;
 import java.util.UUID;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "priorities")
 @SuperBuilder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Category extends AbstractBaseModel {
+public class Priority extends AbstractBaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, length = 1)
     private String prefix;
+
+    @Column(nullable = false)
+    private int weight;
 
     @Column(nullable = false, length = 100)
     private String name;
@@ -43,7 +46,7 @@ public class Category extends AbstractBaseModel {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Category)) return false;
-        return id != null && id.equals(((Category) obj).id);
+        if (!(obj instanceof Priority)) return false;
+        return id != null && id.equals(((Priority) obj).id);
     }
 }
