@@ -58,9 +58,10 @@ public class Ticket {
     @Column(name = "call_count")
     private int callCount = 0;
 
+    @Builder.Default
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
-    private OffsetDateTime createdAt;
+    private OffsetDateTime createdAt = OffsetDateTime.now();
 
     @Column(name = "called_at")
     private OffsetDateTime calledAt;

@@ -53,9 +53,9 @@ public class TicketService {
                 .issueDate(LocalDate.now())
                 .build();
 
-        ticket = repository.save(ticket);
+        var saved = repository.save(ticket);
 
-        return mapper.toResponse(ticket);
+        return mapper.toResponse(saved);
     }
 
     @Transactional

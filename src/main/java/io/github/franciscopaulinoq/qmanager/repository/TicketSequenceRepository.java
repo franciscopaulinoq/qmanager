@@ -18,8 +18,8 @@ public interface TicketSequenceRepository extends JpaRepository<TicketSequence, 
     Optional<TicketSequence> findBySequencePrefixForUpdate(@Param("prefix") String prefix);
 
     @Modifying
-    @Query(value = "INSERT INTO ticket_sequences (sequence_prefix, current_number, last_reset_at) " +
-            "VALUES (:prefix, 0, :now) " +
+    @Query(value = "INSERT INTO ticket_sequences (id, sequence_prefix, current_number, last_reset_at) " +
+            "VALUES (gen_random_uuid(), :prefix, 0, :now) " +
             "ON CONFLICT (sequence_prefix) DO NOTHING", nativeQuery = true)
     void insertIgnore(@Param("prefix") String prefix, @Param("now") OffsetDateTime now);
 }
