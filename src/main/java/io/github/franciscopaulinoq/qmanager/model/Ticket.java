@@ -42,8 +42,9 @@ public class Ticket {
     @Column(nullable = false, length = 20)
     private TicketStatus status = TicketStatus.WAITING;
 
+    @Builder.Default
     @Column(name = "issue_date", nullable = false, updatable = false)
-    private LocalDate issueDate;
+    private LocalDate issueDate = LocalDate.now();;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)

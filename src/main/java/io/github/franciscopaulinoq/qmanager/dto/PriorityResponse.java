@@ -10,4 +10,5 @@ public record PriorityResponse(
         String name,
         boolean active,
         OffsetDateTime createdAt
-) { }
+) {
+}

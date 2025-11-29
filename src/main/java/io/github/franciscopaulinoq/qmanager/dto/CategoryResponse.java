@@ -9,4 +9,5 @@ public record CategoryResponse(
         String prefix,
         boolean active,
         OffsetDateTime createdAt
-) { }
+) {
+}
