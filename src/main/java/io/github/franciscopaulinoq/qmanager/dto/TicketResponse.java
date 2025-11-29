@@ -11,6 +11,7 @@ public record TicketResponse(
     String priorityName,
     Integer callCount,
     OffsetDateTime createdAt,
-    OffsetDateTime calledAt
+    OffsetDateTime calledAt,
+    OffsetDateTime closedAt
 ) {
 }

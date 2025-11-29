@@ -3,6 +3,7 @@ package io.github.franciscopaulinoq.qmanager.service;
 import io.github.franciscopaulinoq.qmanager.dto.TicketCreateRequest;
 import io.github.franciscopaulinoq.qmanager.dto.TicketMonitorResponse;
 import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
+import io.github.franciscopaulinoq.qmanager.dto.TicketUpdateRequest;
 import io.github.franciscopaulinoq.qmanager.exception.BusinessException;
 import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
 import io.github.franciscopaulinoq.qmanager.exception.PriorityNotFoundException;
@@ -21,9 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -79,6 +80,23 @@ public class TicketService {
         ticket.setStatus(TicketStatus.IN_PROGRESS);
         ticket.setCalledAt(OffsetDateTime.now());
         ticket.setCallCount(1);
+
+        return mapper.toResponse(repository.save(ticket));
+    }
+
+    @Transactional
+    public TicketResponse updateStatus(UUID id, TicketUpdateRequest request) {
+        Ticket ticket = repository.findById(id).orElseThrow(() -> new BusinessException("Ticket not found"));
+
+        if (ticket.getStatus() == TicketStatus.CLOSED) {
+            throw new BusinessException("Ticket is already closed");
+        }
+
+        ticket.setStatus(request.status());
+
+        if (request.status() == TicketStatus.CLOSED) {
+            ticket.setClosedAt(OffsetDateTime.now());
+        }
 
         return mapper.toResponse(repository.save(ticket));
     }
