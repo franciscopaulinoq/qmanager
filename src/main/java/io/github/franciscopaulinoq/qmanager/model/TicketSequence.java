@@ -30,9 +30,11 @@ public class TicketSequence {
     @Column(name = "sequence_prefix", nullable = false, unique = true, length = 10)
     private String sequencePrefix;
 
+    @Builder.Default
     @Column(name = "current_number", nullable = false)
     private int currentNumber = 0;
 
+    @Builder.Default
     @Column(name = "last_reset_at")
     private OffsetDateTime lastResetAt = OffsetDateTime.now();
 
