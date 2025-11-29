@@ -34,5 +34,5 @@ public class TicketSequence {
     private int currentNumber = 0;
 
     @Column(name = "last_reset_at")
-    private OffsetDateTime lastResetAt;
+    private OffsetDateTime lastResetAt = OffsetDateTime.now();
 }
