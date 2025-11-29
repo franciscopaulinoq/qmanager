@@ -3,7 +3,7 @@ CREATE TABLE ticket_sequences
     id              UUID PRIMARY KEY,
     sequence_prefix VARCHAR(10) NOT NULL UNIQUE,
     current_number  INTEGER     NOT NULL     DEFAULT 0,
-    last_reset_at   TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    last_reset_at   TIMESTAMP WITH TIME ZONE
 );
 
 CREATE TABLE tickets
@@ -16,7 +16,7 @@ CREATE TABLE tickets
     category_id UUID                     NOT NULL REFERENCES categories (id),
     call_count  INT                      NOT NULL DEFAULT 0,
 
-    created_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    created_at  TIMESTAMP WITH TIME ZONE NOT NULL,
     called_at   TIMESTAMP WITH TIME ZONE,
     closed_at   TIMESTAMP WITH TIME ZONE
 );

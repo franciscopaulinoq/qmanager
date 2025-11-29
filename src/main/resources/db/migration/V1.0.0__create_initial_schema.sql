@@ -4,7 +4,7 @@ CREATE TABLE categories
     prefix     CHAR(1)      NOT NULL,
     name       VARCHAR(100) NOT NULL,
     active     BOOLEAN                  DEFAULT TRUE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITH TIME ZONE,
     updated_at TIMESTAMP WITH TIME ZONE
 );
 
@@ -15,6 +15,6 @@ CREATE TABLE priorities
     weight     SMALLINT     NOT NULL    DEFAULT 1,
     name       VARCHAR(100) NOT NULL,
     active     BOOLEAN                  DEFAULT TRUE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    created_at TIMESTAMP WITH TIME ZONE,
     updated_at TIMESTAMP WITH TIME ZONE
 );
