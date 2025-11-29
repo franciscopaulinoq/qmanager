@@ -1,6 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.controller;
 
 import io.github.franciscopaulinoq.qmanager.dto.TicketCreateRequest;
+import io.github.franciscopaulinoq.qmanager.dto.TicketMonitorResponse;
 import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
 import io.github.franciscopaulinoq.qmanager.service.TicketService;
 import jakarta.validation.Valid;
@@ -40,8 +41,13 @@ public class TicketController {
     }
 
     @GetMapping
-    public Page<TicketResponse> listAllTickets(@RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<TicketResponse>> listAllTickets(@RequestParam(defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, maxPageSize);
-        return service.listAllTickets(pageable);
+        return ResponseEntity.ok(service.listAllTickets(pageable));
+    }
+
+    @GetMapping("/monitor")
+    public ResponseEntity<TicketMonitorResponse> getMonitor() {
+        return ResponseEntity.ok(service.getTicketMonitor());
     }
 }

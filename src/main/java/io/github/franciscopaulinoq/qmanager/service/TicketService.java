@@ -1,6 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.service;
 
 import io.github.franciscopaulinoq.qmanager.dto.TicketCreateRequest;
+import io.github.franciscopaulinoq.qmanager.dto.TicketMonitorResponse;
 import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
 import io.github.franciscopaulinoq.qmanager.exception.BusinessException;
 import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -77,7 +80,29 @@ public class TicketService {
         ticket.setCalledAt(OffsetDateTime.now());
         ticket.setCallCount(1);
 
-        return mapper.toResponse(ticket);
+        return mapper.toResponse(repository.save(ticket));
+    }
+
+    public TicketMonitorResponse getTicketMonitor() {
+        List<Ticket> recentHistory = repository.findRecentHistory(LocalDate.now());
+
+        TicketResponse current = null;
+        List<TicketResponse> historyResponse;
+
+        if (!recentHistory.isEmpty()) {
+            Ticket latest = recentHistory.getFirst();
+
+            if (latest.getStatus() == TicketStatus.IN_PROGRESS) {
+                current = mapper.toResponse(latest);
+                historyResponse = mapper.toResponse(recentHistory.subList(1, recentHistory.size()));
+            } else {
+                historyResponse = mapper.toResponse(recentHistory);
+            }
+        } else {
+            historyResponse = List.of();
+        }
+
+        return new TicketMonitorResponse(current, historyResponse);
     }
 
     public Page<TicketResponse> listAllTickets(Pageable pageable) {
