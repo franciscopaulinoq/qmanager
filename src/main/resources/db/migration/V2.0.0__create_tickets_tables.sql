@@ -9,11 +9,12 @@ CREATE TABLE ticket_sequences
 CREATE TABLE tickets
 (
     id          UUID PRIMARY KEY,
-    code        VARCHAR(20) NOT NULL,
-    status      VARCHAR(20) NOT NULL CHECK (status IN ('WAITING', 'IN_PROGRESS', 'CLOSED', 'EXPIRED')),
-    issue_date  DATE        NOT NULL DEFAULT CURRENT_DATE,
-    priority_id UUID        NOT NULL REFERENCES priorities (id),
-    category_id  UUID        NOT NULL REFERENCES categories (id),
+    code        VARCHAR(20)              NOT NULL,
+    status      VARCHAR(20)              NOT NULL CHECK (status IN ('WAITING', 'IN_PROGRESS', 'CLOSED', 'EXPIRED')),
+    issue_date  DATE                     NOT NULL DEFAULT CURRENT_DATE,
+    priority_id UUID                     NOT NULL REFERENCES priorities (id),
+    category_id UUID                     NOT NULL REFERENCES categories (id),
+    call_count  INT                      NOT NULL DEFAULT 0,
 
     created_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     called_at   TIMESTAMP WITH TIME ZONE,

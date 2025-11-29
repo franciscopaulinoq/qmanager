@@ -19,6 +19,7 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 public class TicketService {
+    private final TicketSequenceService ticketSequenceService;
     private final TicketRepository repository;
     private final CategoryRepository categoryRepository;
     private final PriorityRepository priorityRepository;
@@ -32,13 +33,16 @@ public class TicketService {
         var priority = priorityRepository.findById(request.priorityId())
                 .orElseThrow(() -> new PriorityNotFoundException("Priority not found"));
 
-        String generateCode = "A-001";
+        String prefix = category.getPrefix() + priority.getPrefix();
+        int number = ticketSequenceService.getNextSequence(prefix);
+        String code = String.format("%s-%03d", prefix, number);
 
         var ticket = Ticket.builder()
-                .code(generateCode)
+                .code(code)
                 .category(category)
                 .priority(priority)
                 .status(TicketStatus.WAITING)
+                .callCount(0)
                 .issueDate(LocalDate.now())
                 .build();
 

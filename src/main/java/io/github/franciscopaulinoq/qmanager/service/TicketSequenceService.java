@@ -15,9 +15,7 @@ public class TicketSequenceService {
     private final TicketSequenceRepository repository;
 
     @Transactional
-    public int getNextSequence(String categoryPrefix, String priorityPrefix) {
-        String sequencePrefix = categoryPrefix + priorityPrefix;
-
+    public int getNextSequence(String sequencePrefix) {
         repository.insertIgnore(sequencePrefix, OffsetDateTime.now());
 
         TicketSequence sequence = repository.findBySequencePrefixForUpdate(sequencePrefix)

@@ -54,6 +54,10 @@ public class Ticket {
     @JoinColumn(name = "priority_id", nullable = false)
     private Priority priority;
 
+    @Builder.Default
+    @Column(name = "call_count")
+    private int callCount = 0;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private OffsetDateTime createdAt;
