@@ -13,6 +13,8 @@ import io.github.franciscopaulinoq.qmanager.repository.PriorityRepository;
 import io.github.franciscopaulinoq.qmanager.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,5 +78,9 @@ public class TicketService {
         ticket.setCallCount(1);
 
         return mapper.toResponse(ticket);
+    }
+
+    public Page<TicketResponse> listAllTickets(Pageable pageable) {
+        return repository.findAll(pageable).map(mapper::toResponse);
     }
 }
