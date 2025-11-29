@@ -16,7 +16,7 @@ public class TicketSequenceService {
 
     @Transactional
     public int getNextSequence(String categoryPrefix, String priorityPrefix) {
-        String sequencePrefix = categoryPrefix + priorityPrefix + "-";
+        String sequencePrefix = categoryPrefix + priorityPrefix;
 
         repository.insertIgnore(sequencePrefix, OffsetDateTime.now());
 
