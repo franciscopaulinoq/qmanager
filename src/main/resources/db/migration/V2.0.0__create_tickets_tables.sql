@@ -20,3 +20,5 @@ CREATE TABLE tickets
     called_at   TIMESTAMP WITH TIME ZONE,
     closed_at   TIMESTAMP WITH TIME ZONE
 );
+
+CREATE UNIQUE INDEX idx_tickets_code_date ON tickets (code, issue_date);
