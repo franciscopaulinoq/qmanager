@@ -35,4 +35,16 @@ public class TicketSequence {
 
     @Column(name = "last_reset_at")
     private OffsetDateTime lastResetAt = OffsetDateTime.now();
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof TicketSequence)) return false;
+        return id != null && id.equals(((TicketSequence) obj).id);
+    }
 }
