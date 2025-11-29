@@ -13,7 +13,7 @@ CREATE TABLE tickets
     status      VARCHAR(20) NOT NULL CHECK (status IN ('WAITING', 'IN_PROGRESS', 'CLOSED', 'EXPIRED')),
     issue_date  DATE        NOT NULL DEFAULT CURRENT_DATE,
     priority_id UUID        NOT NULL REFERENCES priorities (id),
-    service_id  UUID        NOT NULL REFERENCES services (id),
+    category_id  UUID        NOT NULL REFERENCES categories (id),
 
     created_at  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     called_at   TIMESTAMP WITH TIME ZONE,
