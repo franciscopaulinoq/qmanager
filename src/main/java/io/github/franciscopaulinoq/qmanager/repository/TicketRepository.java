@@ -13,7 +13,7 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     @Query("""
                 SELECT t FROM Ticket t JOIN t.priority p
                 WHERE t.status = 'WAITING' AND t.issueDate = CURRENT_DATE
-                ORDER BY p.weight DESC, t.createdAt ASC
+                ORDER BY p.weight DESC, t.startedAt ASC
                 LIMIT 1
             """)
     Optional<Ticket> findNextStrict();
@@ -21,7 +21,7 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
     @Query("""
                 SELECT t FROM Ticket t
                 WHERE t.status = 'WAITING' AND t.issueDate = CURRENT_DATE
-                ORDER BY t.createdAt ASC
+                ORDER BY t.startedAt ASC
                 LIMIT 1
             """)
     Optional<Ticket> findNextFifo();

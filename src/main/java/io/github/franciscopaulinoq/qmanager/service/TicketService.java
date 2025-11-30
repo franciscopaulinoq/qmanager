@@ -139,7 +139,7 @@ public class TicketService {
             ticket.setCalledAt(OffsetDateTime.now());
         } else {
             ticket.setStatus(TicketStatus.WAITING);
-            ticket.setCreatedAt(OffsetDateTime.now());
+            ticket.setStartedAt(OffsetDateTime.now());
         }
 
         return mapper.toResponse(repository.save(ticket));

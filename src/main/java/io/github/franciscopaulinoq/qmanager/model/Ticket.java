@@ -16,7 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -24,12 +24,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tickets")
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Ticket {
+public class Ticket extends AbstractBaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -59,9 +59,8 @@ public class Ticket {
     private int callCount = 0;
 
     @Builder.Default
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    @Column(name = "started_at", nullable = false)
+    private OffsetDateTime startedAt = OffsetDateTime.now();
 
     @Column(name = "called_at")
     private OffsetDateTime calledAt;
