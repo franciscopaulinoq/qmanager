@@ -61,6 +61,24 @@ public class TicketController {
         return ResponseEntity.ok(service.callNextTicket());
     }
 
+    @PostMapping("/tickets/{id}/calls")
+    public ResponseEntity<TicketResponse> callAgain(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.callAgain(id));
+    }
+
+    @PostMapping("/tickets/{id}/hold")
+    public ResponseEntity<TicketResponse> moveToPending(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.moveToPending(id));
+    }
+
+    @PostMapping("/tickets/{id}/reactivate")
+    public ResponseEntity<TicketResponse> reactivateTicket(
+            @PathVariable UUID id,
+            @RequestParam(defaultValue = "true") boolean urgent
+    ) {
+        return ResponseEntity.ok(service.reactivateTicket(id, urgent));
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<TicketResponse> update(@PathVariable("id") UUID id, TicketUpdateRequest request) {
         return ResponseEntity.ok(service.updateStatus(id, request));

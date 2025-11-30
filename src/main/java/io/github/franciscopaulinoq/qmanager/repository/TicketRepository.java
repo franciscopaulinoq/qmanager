@@ -28,7 +28,9 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
 
     @Query("""
             SELECT t FROM Ticket t
-            WHERE t.status != 'WAITING' AND t.issueDate = CURRENT_DATE
+            WHERE t.issueDate = CURRENT_DATE
+            AND t.status != 'WAITING'
+            AND t.calledAt IS NOT NULL
             ORDER BY t.calledAt DESC
             LIMIT 10
             """)

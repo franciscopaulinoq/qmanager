@@ -10,7 +10,7 @@ CREATE TABLE tickets
 (
     id          UUID PRIMARY KEY,
     code        VARCHAR(20)              NOT NULL,
-    status      VARCHAR(20)              NOT NULL CHECK (status IN ('WAITING', 'IN_PROGRESS', 'CLOSED', 'EXPIRED')),
+    status      VARCHAR(20)              NOT NULL CHECK (status IN ('WAITING', 'IN_PROGRESS', 'PENDING', 'CLOSED', 'EXPIRED')),
     issue_date  DATE                     NOT NULL DEFAULT CURRENT_DATE,
     priority_id UUID                     NOT NULL REFERENCES priorities (id),
     category_id UUID                     NOT NULL REFERENCES categories (id),

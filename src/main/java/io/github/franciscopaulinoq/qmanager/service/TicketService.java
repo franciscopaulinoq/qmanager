@@ -32,6 +32,9 @@ public class TicketService {
     @Value("${qmanager.queue.strategy:STRICT}")
     private String strategy;
 
+    @Value("${qmanager.queue.max.call.attempts}")
+    private int maxCallAttempts;
+
     private final TicketSequenceService ticketSequenceService;
     private final TicketRepository repository;
     private final CategoryRepository categoryRepository;
@@ -86,10 +89,12 @@ public class TicketService {
 
     @Transactional
     public TicketResponse updateStatus(UUID id, TicketUpdateRequest request) {
-        Ticket ticket = repository.findById(id).orElseThrow(() -> new BusinessException("Ticket not found"));
+        Ticket ticket = repository.findById(id)
+                .orElseThrow(() -> new BusinessException("Ticket not found"));
 
-        if (ticket.getStatus() == TicketStatus.CLOSED) {
-            throw new BusinessException("Ticket is already closed");
+        if (ticket.getStatus() == TicketStatus.CLOSED ||
+                ticket.getStatus() == TicketStatus.EXPIRED) {
+            throw new BusinessException("This ticket has been closed");
         }
 
         ticket.setStatus(request.status());
@@ -121,6 +126,61 @@ public class TicketService {
         }
 
         return new TicketMonitorResponse(current, historyResponse);
+    }
+
+    @Transactional
+    public TicketResponse callAgain(UUID id) {
+        Ticket ticket = repository.findById(id)
+                .orElseThrow(() -> new BusinessException("Ticket not found"));
+
+        if (ticket.getStatus() != TicketStatus.IN_PROGRESS) {
+            throw new BusinessException("Only in-progress tickets can be called");
+        }
+
+        ticket.setCallCount(ticket.getCallCount() + 1);
+
+        return mapper.toResponse(repository.save(ticket));
+    }
+
+    @Transactional
+    public TicketResponse moveToPending(UUID id) {
+        Ticket ticket = repository.findById(id)
+                .orElseThrow(() -> new BusinessException("Ticket not found"));
+
+        if (ticket.getStatus() != TicketStatus.IN_PROGRESS) {
+            throw new BusinessException("Only in-progress tickets can be placed on hold");
+        }
+
+        int newCount = ticket.getCallCount() + 1;
+        ticket.setCallCount(newCount);
+
+        if (newCount > maxCallAttempts) {
+            ticket.setStatus(TicketStatus.EXPIRED);
+        } else {
+            ticket.setStatus(TicketStatus.PENDING);
+        }
+
+        return mapper.toResponse(repository.save(ticket));
+    }
+
+    @Transactional
+    public TicketResponse reactivateTicket(UUID id, boolean urgent) {
+        Ticket ticket = repository.findById(id)
+                .orElseThrow(() -> new BusinessException("Ticket not found"));
+
+        if (ticket.getStatus() != TicketStatus.PENDING) {
+            throw new BusinessException("Only pending tickets can be reactivated");
+        }
+
+        if (urgent) {
+            ticket.setStatus(TicketStatus.IN_PROGRESS);
+            ticket.setCalledAt(OffsetDateTime.now());
+        } else {
+            ticket.setStatus(TicketStatus.WAITING);
+            ticket.setCreatedAt(OffsetDateTime.now());
+        }
+
+        return mapper.toResponse(repository.save(ticket));
     }
 
     public Page<TicketResponse> listAllTickets(Pageable pageable) {
