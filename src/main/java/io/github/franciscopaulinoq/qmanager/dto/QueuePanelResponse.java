@@ -2,7 +2,7 @@ package io.github.franciscopaulinoq.qmanager.dto;
 
 import java.util.List;
 
-public record TicketMonitorResponse(
+public record QueuePanelResponse(
         TicketResponse current,
         List<TicketResponse> history
 ) {

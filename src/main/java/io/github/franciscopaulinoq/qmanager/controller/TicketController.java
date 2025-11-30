@@ -1,7 +1,6 @@
 package io.github.franciscopaulinoq.qmanager.controller;
 
 import io.github.franciscopaulinoq.qmanager.dto.TicketCreateRequest;
-import io.github.franciscopaulinoq.qmanager.dto.TicketMonitorResponse;
 import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
 import io.github.franciscopaulinoq.qmanager.dto.TicketUpdateRequest;
 import io.github.franciscopaulinoq.qmanager.service.TicketService;
@@ -51,27 +50,17 @@ public class TicketController {
         return ResponseEntity.ok(service.listAllTickets(pageable));
     }
 
-    @GetMapping("/monitor")
-    public ResponseEntity<TicketMonitorResponse> getMonitor() {
-        return ResponseEntity.ok(service.getTicketMonitor());
-    }
-
     @PostMapping("/next")
     public ResponseEntity<TicketResponse> next() {
         return ResponseEntity.ok(service.callNextTicket());
     }
 
-    @PostMapping("/tickets/{id}/calls")
-    public ResponseEntity<TicketResponse> callAgain(@PathVariable UUID id) {
-        return ResponseEntity.ok(service.callAgain(id));
-    }
-
-    @PostMapping("/tickets/{id}/hold")
+    @PostMapping("/{id}/hold")
     public ResponseEntity<TicketResponse> moveToPending(@PathVariable UUID id) {
         return ResponseEntity.ok(service.moveToPending(id));
     }
 
-    @PostMapping("/tickets/{id}/reactivate")
+    @PostMapping("/{id}/reactivate")
     public ResponseEntity<TicketResponse> reactivateTicket(
             @PathVariable UUID id,
             @RequestParam(defaultValue = "true") boolean urgent
@@ -80,7 +69,10 @@ public class TicketController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<TicketResponse> update(@PathVariable("id") UUID id, TicketUpdateRequest request) {
+    public ResponseEntity<TicketResponse> update(
+            @PathVariable("id") UUID id,
+            @RequestBody @Valid TicketUpdateRequest request
+    ) {
         return ResponseEntity.ok(service.updateStatus(id, request));
     }
 }

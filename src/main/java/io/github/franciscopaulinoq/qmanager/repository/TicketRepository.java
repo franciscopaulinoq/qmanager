@@ -32,7 +32,7 @@ public interface TicketRepository extends JpaRepository<Ticket, UUID> {
             AND t.status != 'WAITING'
             AND t.calledAt IS NOT NULL
             ORDER BY t.calledAt DESC
-            LIMIT 10
+            LIMIT 11
             """)
     List<Ticket> findRecentHistory(LocalDate date);
 }

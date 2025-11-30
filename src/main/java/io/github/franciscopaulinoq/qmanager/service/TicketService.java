@@ -1,7 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.service;
 
 import io.github.franciscopaulinoq.qmanager.dto.TicketCreateRequest;
-import io.github.franciscopaulinoq.qmanager.dto.TicketMonitorResponse;
+import io.github.franciscopaulinoq.qmanager.dto.QueuePanelResponse;
 import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
 import io.github.franciscopaulinoq.qmanager.dto.TicketUpdateRequest;
 import io.github.franciscopaulinoq.qmanager.exception.BusinessException;
@@ -102,42 +102,6 @@ public class TicketService {
         if (request.status() == TicketStatus.CLOSED) {
             ticket.setClosedAt(OffsetDateTime.now());
         }
-
-        return mapper.toResponse(repository.save(ticket));
-    }
-
-    public TicketMonitorResponse getTicketMonitor() {
-        List<Ticket> recentHistory = repository.findRecentHistory(LocalDate.now());
-
-        TicketResponse current = null;
-        List<TicketResponse> historyResponse;
-
-        if (!recentHistory.isEmpty()) {
-            Ticket latest = recentHistory.getFirst();
-
-            if (latest.getStatus() == TicketStatus.IN_PROGRESS) {
-                current = mapper.toResponse(latest);
-                historyResponse = mapper.toResponse(recentHistory.subList(1, recentHistory.size()));
-            } else {
-                historyResponse = mapper.toResponse(recentHistory);
-            }
-        } else {
-            historyResponse = List.of();
-        }
-
-        return new TicketMonitorResponse(current, historyResponse);
-    }
-
-    @Transactional
-    public TicketResponse callAgain(UUID id) {
-        Ticket ticket = repository.findById(id)
-                .orElseThrow(() -> new BusinessException("Ticket not found"));
-
-        if (ticket.getStatus() != TicketStatus.IN_PROGRESS) {
-            throw new BusinessException("Only in-progress tickets can be called");
-        }
-
-        ticket.setCallCount(ticket.getCallCount() + 1);
 
         return mapper.toResponse(repository.save(ticket));
     }
