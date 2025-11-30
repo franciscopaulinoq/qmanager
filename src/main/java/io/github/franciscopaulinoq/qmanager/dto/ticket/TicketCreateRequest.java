@@ -1,0 +1,16 @@
+package io.github.franciscopaulinoq.qmanager.dto.ticket;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+
+import java.util.UUID;
+
+@Builder
+public record TicketCreateRequest(
+        @NotNull(message = "categoryId is required")
+        UUID categoryId,
+
+        @NotNull(message = "priorityId is required")
+        UUID priorityId
+) {
+}

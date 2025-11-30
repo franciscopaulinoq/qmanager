@@ -1,7 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.mapper;
 
-import io.github.franciscopaulinoq.qmanager.dto.CategoryRequest;
-import io.github.franciscopaulinoq.qmanager.dto.CategoryResponse;
+import io.github.franciscopaulinoq.qmanager.dto.category.CategoryRequest;
+import io.github.franciscopaulinoq.qmanager.dto.category.CategoryResponse;
 import io.github.franciscopaulinoq.qmanager.model.Category;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

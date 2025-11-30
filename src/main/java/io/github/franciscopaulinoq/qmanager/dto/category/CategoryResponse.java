@@ -1,13 +1,16 @@
-package io.github.franciscopaulinoq.qmanager.dto;
+package io.github.franciscopaulinoq.qmanager.dto.category;
+
+import lombok.Builder;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-public record PriorityResponse(
+@Builder
+public record CategoryResponse(
         UUID id,
-        String prefix,
-        int weight,
         String name,
+        String prefix,
         boolean active,
         OffsetDateTime createdAt
-) { }
+) {
+}

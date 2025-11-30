@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,7 @@ public class Category extends AbstractBaseModel {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Builder.Default
     @Column(nullable = false)
     private boolean active = true;
 

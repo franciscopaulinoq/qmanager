@@ -1,7 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.controller;
 
-import io.github.franciscopaulinoq.qmanager.dto.PriorityRequest;
-import io.github.franciscopaulinoq.qmanager.dto.PriorityResponse;
+import io.github.franciscopaulinoq.qmanager.dto.priority.PriorityRequest;
+import io.github.franciscopaulinoq.qmanager.dto.priority.PriorityResponse;
 import io.github.franciscopaulinoq.qmanager.service.PriorityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
