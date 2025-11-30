@@ -39,6 +39,11 @@ public class TicketService {
     private final PriorityRepository priorityRepository;
     private final TicketMapper mapper;
 
+    private Ticket getTicketOrThrow(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new BusinessException("Ticket not found"));
+    }
+
     @Transactional
     public TicketResponse create(TicketCreateRequest request) {
         var category = categoryRepository.findById(request.categoryId())
@@ -87,8 +92,7 @@ public class TicketService {
 
     @Transactional
     public TicketResponse updateStatus(UUID id, TicketUpdateRequest request) {
-        Ticket ticket = repository.findById(id)
-                .orElseThrow(() -> new BusinessException("Ticket not found"));
+        Ticket ticket = getTicketOrThrow(id);
 
         if (ticket.getStatus() == TicketStatus.CLOSED ||
                 ticket.getStatus() == TicketStatus.EXPIRED) {
@@ -106,8 +110,7 @@ public class TicketService {
 
     @Transactional
     public TicketResponse moveToPending(UUID id) {
-        Ticket ticket = repository.findById(id)
-                .orElseThrow(() -> new BusinessException("Ticket not found"));
+        Ticket ticket = getTicketOrThrow(id);
 
         if (ticket.getStatus() != TicketStatus.IN_PROGRESS) {
             throw new BusinessException("Only in-progress tickets can be placed on hold");
@@ -127,8 +130,7 @@ public class TicketService {
 
     @Transactional
     public TicketResponse reactivateTicket(UUID id, boolean urgent) {
-        Ticket ticket = repository.findById(id)
-                .orElseThrow(() -> new BusinessException("Ticket not found"));
+        Ticket ticket = getTicketOrThrow(id);
 
         if (ticket.getStatus() != TicketStatus.PENDING) {
             throw new BusinessException("Only pending tickets can be reactivated");
