@@ -1,7 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.service;
 
-import io.github.franciscopaulinoq.qmanager.dto.QueuePanelResponse;
-import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.QueuePanelResponse;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketResponse;
 import io.github.franciscopaulinoq.qmanager.mapper.TicketMapper;
 import io.github.franciscopaulinoq.qmanager.model.Ticket;
 import io.github.franciscopaulinoq.qmanager.model.TicketStatus;

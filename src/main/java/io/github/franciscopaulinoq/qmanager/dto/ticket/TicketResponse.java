@@ -1,4 +1,4 @@
-package io.github.franciscopaulinoq.qmanager.dto;
+package io.github.franciscopaulinoq.qmanager.dto.ticket;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

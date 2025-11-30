@@ -1,9 +1,8 @@
 package io.github.franciscopaulinoq.qmanager.service;
 
-import io.github.franciscopaulinoq.qmanager.dto.TicketCreateRequest;
-import io.github.franciscopaulinoq.qmanager.dto.QueuePanelResponse;
-import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
-import io.github.franciscopaulinoq.qmanager.dto.TicketUpdateRequest;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketCreateRequest;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketResponse;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketUpdateRequest;
 import io.github.franciscopaulinoq.qmanager.exception.BusinessException;
 import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
 import io.github.franciscopaulinoq.qmanager.exception.PriorityNotFoundException;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

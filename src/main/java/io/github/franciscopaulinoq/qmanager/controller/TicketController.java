@@ -1,8 +1,8 @@
 package io.github.franciscopaulinoq.qmanager.controller;
 
-import io.github.franciscopaulinoq.qmanager.dto.TicketCreateRequest;
-import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
-import io.github.franciscopaulinoq.qmanager.dto.TicketUpdateRequest;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketCreateRequest;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketResponse;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketUpdateRequest;
 import io.github.franciscopaulinoq.qmanager.service.TicketService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

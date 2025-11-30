@@ -1,6 +1,6 @@
 package io.github.franciscopaulinoq.qmanager.controller;
 
-import io.github.franciscopaulinoq.qmanager.dto.QueuePanelResponse;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.QueuePanelResponse;
 import io.github.franciscopaulinoq.qmanager.service.QueuePainelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

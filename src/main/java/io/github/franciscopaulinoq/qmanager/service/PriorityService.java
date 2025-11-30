@@ -1,7 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.service;
 
-import io.github.franciscopaulinoq.qmanager.dto.PriorityRequest;
-import io.github.franciscopaulinoq.qmanager.dto.PriorityResponse;
+import io.github.franciscopaulinoq.qmanager.dto.priority.PriorityRequest;
+import io.github.franciscopaulinoq.qmanager.dto.priority.PriorityResponse;
 import io.github.franciscopaulinoq.qmanager.exception.PriorityAlreadyExistsException;
 import io.github.franciscopaulinoq.qmanager.exception.PriorityNotFoundException;
 import io.github.franciscopaulinoq.qmanager.mapper.PriorityMapper;

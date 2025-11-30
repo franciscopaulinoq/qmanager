@@ -1,6 +1,6 @@
 package io.github.franciscopaulinoq.qmanager.mapper;
 
-import io.github.franciscopaulinoq.qmanager.dto.TicketResponse;
+import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketResponse;
 import io.github.franciscopaulinoq.qmanager.model.Ticket;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

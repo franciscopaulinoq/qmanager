@@ -1,7 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.mapper;
 
-import io.github.franciscopaulinoq.qmanager.dto.PriorityRequest;
-import io.github.franciscopaulinoq.qmanager.dto.PriorityResponse;
+import io.github.franciscopaulinoq.qmanager.dto.priority.PriorityRequest;
+import io.github.franciscopaulinoq.qmanager.dto.priority.PriorityResponse;
 import io.github.franciscopaulinoq.qmanager.model.Priority;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
