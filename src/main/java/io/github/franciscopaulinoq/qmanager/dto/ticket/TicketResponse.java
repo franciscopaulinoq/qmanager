@@ -1,8 +1,11 @@
 package io.github.franciscopaulinoq.qmanager.dto.ticket;
 
+import lombok.Builder;
+
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+@Builder
 public record TicketResponse(
         UUID id,
         String code,
