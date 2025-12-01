@@ -14,6 +14,20 @@ services:
     networks:
       - qmanager-network
 
+  app:
+    build: .
+    container_name: qmanager-app
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/qmanager_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - qmanager-network
+
 volumes:
   postgres_data:
 

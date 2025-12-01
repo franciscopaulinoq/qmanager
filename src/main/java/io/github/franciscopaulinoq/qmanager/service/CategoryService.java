@@ -1,7 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.service;
 
-import io.github.franciscopaulinoq.qmanager.dto.CategoryRequest;
-import io.github.franciscopaulinoq.qmanager.dto.CategoryResponse;
+import io.github.franciscopaulinoq.qmanager.dto.category.CategoryRequest;
+import io.github.franciscopaulinoq.qmanager.dto.category.CategoryResponse;
 import io.github.franciscopaulinoq.qmanager.exception.CategoryAlreadyExistsException;
 import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
 import io.github.franciscopaulinoq.qmanager.mapper.CategoryMapper;

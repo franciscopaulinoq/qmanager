@@ -1,10 +1,12 @@
-package io.github.franciscopaulinoq.qmanager.dto;
+package io.github.franciscopaulinoq.qmanager.dto.priority;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Min;
+import lombok.Builder;
 
+@Builder
 public record PriorityRequest(
         @NotBlank(message = "The prefix is mandatory")
         @Size(min = 1, max = 1, message = "The prefix must be one character")
