@@ -4,8 +4,7 @@ import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketCreateRequest;
 import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketResponse;
 import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketUpdateRequest;
 import io.github.franciscopaulinoq.qmanager.exception.BusinessException;
-import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
-import io.github.franciscopaulinoq.qmanager.exception.PriorityNotFoundException;
+import io.github.franciscopaulinoq.qmanager.exception.ResourceNotFoundException;
 import io.github.franciscopaulinoq.qmanager.mapper.TicketMapper;
 import io.github.franciscopaulinoq.qmanager.model.Category;
 import io.github.franciscopaulinoq.qmanager.model.Priority;
@@ -115,7 +114,7 @@ public class TicketServiceTest {
     }
 
     @Test
-    @DisplayName("Create should throw CategoryNotFoundException when category does not exist")
+    @DisplayName("Create should throw ResourceNotFoundException when category does not exist")
     void createShouldThrowExceptionWhenCategoryNotFound() {
         var request = TicketCreateRequest.builder()
                 .categoryId(UUID.randomUUID())
@@ -124,14 +123,14 @@ public class TicketServiceTest {
 
         when(categoryRepository.findById(request.categoryId())).thenReturn(Optional.empty());
 
-        assertThrows(CategoryNotFoundException.class, () -> ticketService.create(request));
+        assertThrows(ResourceNotFoundException.class, () -> ticketService.create(request));
 
         verify(priorityRepository, never()).findById(any());
         verify(repository, never()).save(any());
     }
 
     @Test
-    @DisplayName("Create should throw PriorityNotFoundException when priority does not exist")
+    @DisplayName("Create should throw ResourceNotFoundException when priority does not exist")
     void createShouldThrowExceptionWhenPriorityNotFound() {
         var request = TicketCreateRequest.builder()
                 .categoryId(UUID.randomUUID())
@@ -141,7 +140,7 @@ public class TicketServiceTest {
         when(categoryRepository.findById(any())).thenReturn(Optional.of(new Category()));
         when(priorityRepository.findById(request.priorityId())).thenReturn(Optional.empty());
 
-        assertThrows(PriorityNotFoundException.class, () -> ticketService.create(request));
+        assertThrows(ResourceNotFoundException.class, () -> ticketService.create(request));
 
         verify(repository, never()).save(any());
     }

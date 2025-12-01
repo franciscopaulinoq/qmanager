@@ -1,9 +1,8 @@
 package io.github.franciscopaulinoq.qmanager.exception.handler;
 
-import io.github.franciscopaulinoq.qmanager.exception.CategoryAlreadyExistsException;
-import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
-import io.github.franciscopaulinoq.qmanager.exception.PriorityAlreadyExistsException;
-import io.github.franciscopaulinoq.qmanager.exception.PriorityNotFoundException;
+import io.github.franciscopaulinoq.qmanager.exception.BusinessException;
+import io.github.franciscopaulinoq.qmanager.exception.ResourceAlreadyExistsException;
+import io.github.franciscopaulinoq.qmanager.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,34 +14,26 @@ import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(CategoryNotFoundException.class)
-    public ProblemDetail handleCategoryNotFoundException(CategoryNotFoundException e) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ProblemDetail handleCategoryNotFoundException(ResourceNotFoundException e) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
-        problem.setTitle("Category not found");
+        problem.setTitle("Resource not found");
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
 
-    @ExceptionHandler(CategoryAlreadyExistsException.class)
-    public ProblemDetail handleCategoryAlreadyExistsException(CategoryAlreadyExistsException e) {
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ProblemDetail handleCategoryAlreadyExistsException(ResourceAlreadyExistsException e) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
-        problem.setTitle("Category already exists");
+        problem.setTitle("Resource already exists");
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
 
-    @ExceptionHandler(PriorityNotFoundException.class)
-    public ProblemDetail handlePriorityNotFoundException(PriorityNotFoundException e) {
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
-        problem.setTitle("Priority not found");
-        problem.setProperty("timestamp", Instant.now());
-        return problem;
-    }
-
-    @ExceptionHandler(PriorityAlreadyExistsException.class)
-    public ProblemDetail handlePriorityAlreadyExistsException(PriorityAlreadyExistsException e) {
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, e.getMessage());
-        problem.setTitle("Priority already exists");
+    @ExceptionHandler(BusinessException.class)
+    public ProblemDetail handleBusinessException(BusinessException e) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+        problem.setTitle("Bad request");
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }

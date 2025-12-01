@@ -4,8 +4,7 @@ import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketCreateRequest;
 import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketResponse;
 import io.github.franciscopaulinoq.qmanager.dto.ticket.TicketUpdateRequest;
 import io.github.franciscopaulinoq.qmanager.exception.BusinessException;
-import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
-import io.github.franciscopaulinoq.qmanager.exception.PriorityNotFoundException;
+import io.github.franciscopaulinoq.qmanager.exception.ResourceNotFoundException;
 import io.github.franciscopaulinoq.qmanager.mapper.TicketMapper;
 import io.github.franciscopaulinoq.qmanager.model.Ticket;
 import io.github.franciscopaulinoq.qmanager.model.TicketStatus;
@@ -41,16 +40,16 @@ public class TicketService {
 
     private Ticket getTicketOrThrow(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new BusinessException("Ticket not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ticket not found"));
     }
 
     @Transactional
     public TicketResponse create(TicketCreateRequest request) {
         var category = categoryRepository.findById(request.categoryId())
-                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         var priority = priorityRepository.findById(request.priorityId())
-                .orElseThrow(() -> new PriorityNotFoundException("Priority not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Priority not found"));
 
         String prefix = category.getPrefix() + priority.getPrefix();
         int number = ticketSequenceService.getNextSequence(prefix);

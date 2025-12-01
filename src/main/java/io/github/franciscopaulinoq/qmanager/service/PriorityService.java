@@ -2,8 +2,8 @@ package io.github.franciscopaulinoq.qmanager.service;
 
 import io.github.franciscopaulinoq.qmanager.dto.priority.PriorityRequest;
 import io.github.franciscopaulinoq.qmanager.dto.priority.PriorityResponse;
-import io.github.franciscopaulinoq.qmanager.exception.PriorityAlreadyExistsException;
-import io.github.franciscopaulinoq.qmanager.exception.PriorityNotFoundException;
+import io.github.franciscopaulinoq.qmanager.exception.ResourceAlreadyExistsException;
+import io.github.franciscopaulinoq.qmanager.exception.ResourceNotFoundException;
 import io.github.franciscopaulinoq.qmanager.mapper.PriorityMapper;
 import io.github.franciscopaulinoq.qmanager.model.Priority;
 import io.github.franciscopaulinoq.qmanager.repository.PriorityRepository;
@@ -21,7 +21,7 @@ public class PriorityService {
 
     private Priority getPriorityOrThrow(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new PriorityNotFoundException("Priority not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Priority not found: " + id));
     }
 
     public List<PriorityResponse> findAllByActiveTrue() {
@@ -34,7 +34,7 @@ public class PriorityService {
 
     public PriorityResponse create(PriorityRequest request) {
         if (repository.existsByPrefix(request.prefix())) {
-            throw new PriorityAlreadyExistsException("Priority already exists: " + request.prefix());
+            throw new ResourceAlreadyExistsException("Priority already exists: " + request.prefix());
         }
 
         Priority priority = mapper.toEntity(request);
@@ -49,7 +49,7 @@ public class PriorityService {
         Priority priority = getPriorityOrThrow(id);
 
         if (repository.existsByPrefix(request.prefix()) && !priority.getPrefix().equals(request.prefix())) {
-            throw new PriorityAlreadyExistsException("Priority already exists: " + request.prefix());
+            throw new ResourceAlreadyExistsException("Priority already exists: " + request.prefix());
         }
 
         mapper.updateEntityFromRequest(request, priority);
