@@ -1,6 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.controller;
 
 import io.github.franciscopaulinoq.qmanager.dto.user.UserCreateRequest;
+import io.github.franciscopaulinoq.qmanager.dto.user.UserPasswordRequest;
 import io.github.franciscopaulinoq.qmanager.dto.user.UserResponse;
 import io.github.franciscopaulinoq.qmanager.dto.user.UserUpdateRequest;
 import io.github.franciscopaulinoq.qmanager.service.UserService;
@@ -96,6 +97,18 @@ public class UserController {
     })
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/password-reset")
+    @Operation(summary = "Atualizar senha do usuário", description = "Atualiza a senha de um usuário existente por UUID")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Senha atualizada"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida"),
+            @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
+    })
+    public ResponseEntity<Void> updatePassword(@PathVariable UUID id, @RequestBody @Valid UserPasswordRequest request) {
+        service.updatePassword(id, request);
         return ResponseEntity.noContent().build();
     }
 }
