@@ -2,8 +2,8 @@ package io.github.franciscopaulinoq.qmanager.service;
 
 import io.github.franciscopaulinoq.qmanager.dto.category.CategoryRequest;
 import io.github.franciscopaulinoq.qmanager.dto.category.CategoryResponse;
-import io.github.franciscopaulinoq.qmanager.exception.CategoryAlreadyExistsException;
-import io.github.franciscopaulinoq.qmanager.exception.CategoryNotFoundException;
+import io.github.franciscopaulinoq.qmanager.exception.ResourceAlreadyExistsException;
+import io.github.franciscopaulinoq.qmanager.exception.ResourceNotFoundException;
 import io.github.franciscopaulinoq.qmanager.mapper.CategoryMapper;
 import io.github.franciscopaulinoq.qmanager.model.Category;
 import io.github.franciscopaulinoq.qmanager.repository.CategoryRepository;
@@ -21,7 +21,7 @@ public class CategoryService {
 
     private Category getCategoryOrThrow(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new CategoryNotFoundException("Category not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found: " + id));
     }
 
     public List<CategoryResponse> findAllByActiveTrue() {
@@ -34,7 +34,7 @@ public class CategoryService {
 
     public CategoryResponse create(CategoryRequest request) {
         if (repository.existsByPrefix(request.prefix())) {
-            throw new CategoryAlreadyExistsException("Category prefix already exists: " + request.prefix());
+            throw new ResourceAlreadyExistsException("Category prefix already exists: " + request.prefix());
         }
 
         Category entity = mapper.toEntity(request);
@@ -49,7 +49,7 @@ public class CategoryService {
         Category category = getCategoryOrThrow(id);
 
         if (repository.existsByPrefix(request.prefix()) && !category.getPrefix().equals(request.prefix())) {
-            throw new CategoryAlreadyExistsException("Category prefix already exists: " + request.prefix());
+            throw new ResourceAlreadyExistsException("Category prefix already exists: " + request.prefix());
         }
 
         mapper.updateEntityFromRequest(request, category);
