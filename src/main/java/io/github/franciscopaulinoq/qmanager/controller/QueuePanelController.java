@@ -2,6 +2,10 @@ package io.github.franciscopaulinoq.qmanager.controller;
 
 import io.github.franciscopaulinoq.qmanager.dto.ticket.QueuePanelResponse;
 import io.github.franciscopaulinoq.qmanager.service.QueuePainelService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/queue-panel")
 @RequiredArgsConstructor
+@Tag(name = "Queue Panel", description = "Endpoints para monitoramento do painel de filas")
 public class QueuePanelController {
     private final QueuePainelService service;
 
     @GetMapping
+    @Operation(summary = "Obter painel de filas", description = "Retorna o estado atual do painel de filas (monitor)")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Painel retornado com sucesso"),
+        @ApiResponse(responseCode = "500", description = "Erro interno ao gerar o painel")
+    })
     public ResponseEntity<QueuePanelResponse> getMonitor() {
         return ResponseEntity.ok(service.getTicketMonitor());
     }
