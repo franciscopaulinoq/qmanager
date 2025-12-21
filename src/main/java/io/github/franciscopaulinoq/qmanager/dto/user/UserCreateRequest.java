@@ -7,6 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
+import java.util.Set;
+import java.util.UUID;
+
 @Builder
 public record UserCreateRequest(
         @NotBlank(message = "firstName is required")
@@ -24,7 +27,9 @@ public record UserCreateRequest(
         String password,
 
         @NotBlank(message = "confirmPassword is required")
-        String confirmPassword
+        String confirmPassword,
+
+        Set<UUID> rolesId
 ) {
     @AssertTrue(message = "Passwords do not match")
     @JsonIgnore
