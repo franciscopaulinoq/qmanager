@@ -128,6 +128,15 @@ DELETE /api/v1/users/{id}              # Deletar (soft delete)
 PATCH  /api/v1/users/{id}              # Atualizar senha
 ```
 
+### Roles
+```http
+GET    /api/v1/roles                   # Listar todas
+GET    /api/v1/roles/{id}              # Buscar por ID
+POST   /api/v1/roles                   # Criar nova
+PATCH  /api/v1/roles/{id}              # Atualizar
+DELETE /api/v1/roles/{id}              # Deletar (soft delete)
+```
+
 ### Painel de Fila
 ```http
 GET    /api/v1/queue-panel             # Obter status atual da fila

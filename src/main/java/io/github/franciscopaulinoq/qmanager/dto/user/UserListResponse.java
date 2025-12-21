@@ -8,13 +8,12 @@ import java.util.Set;
 import java.util.UUID;
 
 @Builder
-public record UserResponse(
+public record UserListResponse(
         UUID id,
         String firstName,
         String lastName,
         String email,
         boolean active,
-        Set<RoleResponse> roles,
         OffsetDateTime createdAt,
         OffsetDateTime updatedAt
 ) {

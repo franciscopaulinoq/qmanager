@@ -1,6 +1,7 @@
 package io.github.franciscopaulinoq.qmanager.controller;
 
 import io.github.franciscopaulinoq.qmanager.dto.user.UserCreateRequest;
+import io.github.franciscopaulinoq.qmanager.dto.user.UserListResponse;
 import io.github.franciscopaulinoq.qmanager.dto.user.UserPasswordRequest;
 import io.github.franciscopaulinoq.qmanager.dto.user.UserResponse;
 import io.github.franciscopaulinoq.qmanager.dto.user.UserUpdateRequest;
@@ -45,7 +46,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso"),
             @ApiResponse(responseCode = "400", description = "Página inválida")
     })
-    public ResponseEntity<Page<UserResponse>> findAll(@RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<UserListResponse>> findAll(@RequestParam(defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, maxPageSize);
         return ResponseEntity.ok(service.findAll(pageable));
     }
