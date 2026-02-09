@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -41,6 +42,7 @@ public class UserController {
     private final UserService service;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('user:read')")
     @Operation(summary = "Listar usuários com paginação", description = "Retorna uma lista paginada de todos os usuários")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de usuários retornada com sucesso"),
@@ -62,6 +64,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('user:create')")
     @Operation(summary = "Criar usuário", description = "Cria um novo usuário")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Usuário criado"),
@@ -80,6 +83,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('user:update')")
     @Operation(summary = "Atualizar usuário", description = "Atualiza um usuário existente por UUID")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Usuário atualizado"),
@@ -91,6 +95,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('user:delete')")
     @Operation(summary = "Remover usuário", description = "Desativa/Remove um usuário por UUID")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Usuário removido com sucesso"),
@@ -102,6 +107,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/password-reset")
+    @PreAuthorize("hasAuthority('user:reset-password')")
     @Operation(summary = "Atualizar senha do usuário", description = "Atualiza a senha de um usuário existente por UUID")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Senha atualizada"),
