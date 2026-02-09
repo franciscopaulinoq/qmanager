@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -61,7 +62,7 @@ public class TicketController {
         @ApiResponse(responseCode = "400", description = "Página inválida")
     })
     public ResponseEntity<Page<TicketResponse>> listAllTickets(@RequestParam(defaultValue = "0") int page) {
-        Pageable pageable = PageRequest.of(page, maxPageSize);
+        Pageable pageable = PageRequest.of(page, maxPageSize, Sort.by("updatedAt").descending());
         return ResponseEntity.ok(service.listAllTickets(pageable));
     }
 
